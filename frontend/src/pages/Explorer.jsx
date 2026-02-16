@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import './DashboardStyles.css'; 
+import './DashboardStyles.css';
 
 // Helper function to safely load saved state from the browser's memory
 const loadSavedState = (key, defaultValue) => {
@@ -13,7 +13,6 @@ const loadSavedState = (key, defaultValue) => {
 const Explorer = () => {
   const { user, logout } = useContext(AuthContext);
   const history = useHistory();
-  
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -59,19 +58,19 @@ const Explorer = () => {
 
   // Data Fetching
   useEffect(() => {
-    let isMounted = true; 
+    let isMounted = true;
 
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/transactions?page=${currentPage}`, {
           headers: { Authorization: `Bearer ${user.token}` }
         });
-        
+
         if (isMounted) {
           setTransactions(response.data.transactions || []);
           setTotalPages(response.data.totalPages || 1);
           setCurrentPage(response.data.currentPage || 1);
-          setLoading(false); 
+          setLoading(false);
         }
       } catch (err) {
         if (isMounted) {
@@ -91,7 +90,7 @@ const Explorer = () => {
     const parts = text.toString().split(new RegExp(`(${highlight})`, 'gi'));
     return (
       <span>
-        {parts.map((part, index) => 
+        {parts.map((part, index) =>
           part.toLowerCase() === highlight.toLowerCase() ? (
             <span key={index} style={{ backgroundColor: '#fef08a', color: '#854d0e', padding: '0 2px', borderRadius: '4px', fontWeight: 'bold' }}>{part}</span>
           ) : ( <span key={index}>{part}</span> )
@@ -101,10 +100,10 @@ const Explorer = () => {
   };
 
   const filteredTransactions = transactions.filter(t => {
-    const matchesSearch = t.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const matchesSearch = t.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           (t.notes && t.notes.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesCategory = filterCategory === 'All' || t.category === filterCategory;
-    
+
     const amt = parseFloat(t.amount);
     const matchesMin = minAmount === '' || amt >= parseFloat(minAmount);
     const matchesMax = maxAmount === '' || amt <= parseFloat(maxAmount);
@@ -128,7 +127,7 @@ const Explorer = () => {
   return (
     <div className="app-container">
       <div className="content-wrapper">
-        
+
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
           <div>
             <p style={{ color: '#64748b', margin: '0 0 5px 0', fontWeight: '500' }}>Deep Dive</p>
@@ -149,7 +148,7 @@ const Explorer = () => {
             <h3 className="section-title" style={{ margin: 0 }}>Advanced Filters</h3>
             <button onClick={clearFilters} style={{ background: 'none', border: 'none', color: '#3b82f6', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 'bold' }}>Clear All</button>
           </div>
-          
+
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
             <div style={{ gridColumn: '1 / -1', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
               <div style={{ flex: '2 1 300px' }}>
@@ -195,7 +194,7 @@ const Explorer = () => {
           </div>
 
           {loading ? (
-             <div style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Fetching records...</div>
+            <div style={{ textAlign: 'center', padding: '40px', color: '#64748b' }}>Fetching records...</div>
           ) : filteredTransactions.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 20px', color: '#94a3b8' }}>
               <div style={{ fontSize: '3rem', marginBottom: '10px' }}>🔍</div>
@@ -228,21 +227,21 @@ const Explorer = () => {
           )}
 
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '20px', marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
-            <button 
-              className="btn btn-secondary" 
+            <button
+              className="btn btn-secondary"
               onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               style={{ opacity: currentPage === 1 ? 0.5 : 1, cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}
             >
               Previous Page
             </button>
-            
+
             <span style={{ fontWeight: '600', color: '#475569' }}>
               Page {currentPage} of {Math.max(totalPages, 1)}
             </span>
-            
-            <button 
-              className="btn btn-secondary" 
+
+            <button
+              className="btn btn-secondary"
               onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages || totalPages === 0}
               style={{ opacity: (currentPage === totalPages || totalPages === 0) ? 0.5 : 1, cursor: (currentPage === totalPages || totalPages === 0) ? 'not-allowed' : 'pointer' }}
