@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setLoading(true); // Tell the app we are loading
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { email, password });
       setUser(response.data);
       localStorage.setItem('bellcorp_user', JSON.stringify(response.data));
       setLoading(false); // Stop loading on success
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (name, email, password) => {
     setLoading(true); // Tell the app we are loading
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', { name, email, password });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, { name, email, password });
       setUser(response.data);
       localStorage.setItem('bellcorp_user', JSON.stringify(response.data));
       setLoading(false); // Stop loading on success

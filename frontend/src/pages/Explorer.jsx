@@ -63,7 +63,7 @@ const Explorer = () => {
 
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/transactions?page=${currentPage}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/transactions?page=${currentPage}`, {
           headers: { Authorization: `Bearer ${user.token}` }
         });
         

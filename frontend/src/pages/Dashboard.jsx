@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   const fetchSummary = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/transactions/summary', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/transactions/summary`, {
         headers: { Authorization: `Bearer ${user.token}` }
       });
       setSummaryData(response.data);
@@ -40,9 +40,9 @@ const Dashboard = () => {
     setIsSubmitting(true);
     try {
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/transactions/${editingId}`, formData, { headers: { Authorization: `Bearer ${user.token}` }});
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/transactions/${editingId}`, formData, { headers: { Authorization: `Bearer ${user.token}` }});
       } else {
-        await axios.post('http://localhost:5000/api/transactions', formData, { headers: { Authorization: `Bearer ${user.token}` }});
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/transactions`, formData, { headers: { Authorization: `Bearer ${user.token}` }});
       }
       setFormData({ title: '', amount: '', category: 'Food', notes: '' });
       setEditingId(null);
@@ -64,7 +64,7 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this expense?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/transactions/${id}`, { headers: { Authorization: `Bearer ${user.token}` }});
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/transactions/${id}`, { headers: { Authorization: `Bearer ${user.token}` }});
       await fetchSummary();
     } catch (err) {
       console.error("Failed to delete transaction:", err);
