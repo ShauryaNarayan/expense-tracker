@@ -5,6 +5,10 @@ Frontend Live Application: https://expense-tracker-mu-kohl-53.vercel.app
 Backend API URL: https://meeting-scheduler-backend-hjij.onrender.com
 Video Presentation: https://drive.google.com/file/d/1anJKf_W5nK-X9umgeO-w1KNrYWztm83i/view?usp=sharing
 
+Login credentials:
+email: shauryan240701@gmail.com 
+password: Wolverine@2470
+
 Overview
 This repository contains the complete full-stack codebase for the Bellcorp Personal Expense Tracker. It is structured as a monorepo, containing both the React frontend and the Node.js backend. The application is designed to provide a highly responsive, premium user experience for managing personal finances.
 
